@@ -9,3 +9,27 @@
 .episode-list{border-top:1px solid var(--line);margin-top:22px;padding-top:16px}.episode-list h3{margin:0 0 10px}.episode-list ol{max-height:240px;overflow:auto;padding-left:25px;color:#d1d1db}.episode-list li{padding:5px 0}.episode-list .secondary{margin:3px 6px 3px 0}.episode-frame{width:100%;aspect-ratio:16/9;border:0;margin-top:15px;border-radius:8px;background:#000}
 
 .admin-status{margin:18px 0 12px;padding:12px 14px;border:1px solid #484850;border-radius:7px;background:#101015;color:#d8d8df}.admin-actions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 17px}.admin-actions .secondary{min-height:36px;gap:6px}.admin-actions button:disabled{opacity:.45}
+
+/* Player: a single, responsive surface for YouTube embeds and local videos. */
+.watch-dialog{width:min(1080px,calc(100% - 24px));max-height:min(94vh,1020px);padding:clamp(16px,3vw,30px)}
+.watch-dialog h2{font-size:clamp(23px,3vw,34px);margin:8px 0 0;max-width:90%;line-height:1.15}
+.watch-dialog h3{font-size:16px;margin:20px 0 9px}
+.watch-episode{color:#c0bac8;margin:8px 0 16px}
+.watch-stage{background:#000;aspect-ratio:16/9;display:grid;place-items:center;border-radius:10px;overflow:hidden}
+.watch-stage iframe{width:100%;height:100%;border:0;display:block}
+.watch-stage:fullscreen{width:100vw;height:100vh;border-radius:0}
+.watch-toolbar,.local-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:15px 0}
+.watch-toolbar .secondary,.local-actions .secondary{min-height:38px;gap:5px;padding:7px 11px}
+.watch-toolbar .text-button{margin-left:auto}
+.watch-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;max-height:180px;overflow:auto}
+.watch-choice{width:100%;color:#eee;border:1px solid #40404b;background:#191920;border-radius:8px;padding:10px 12px;text-align:left;line-height:1.3}
+.watch-choice:hover,.watch-choice[aria-current=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,#191920)}
+.episode-list .episode-choice{max-width:100%;text-align:left;white-space:normal}
+.library-modal.theater{width:min(1180px,calc(100% - 24px));max-width:none;max-height:96vh}
+.library-modal.theater video{max-height:68vh}
+.resume-action{margin-top:12px}
+.local-timeline{display:flex;align-items:center;gap:10px;margin-top:12px;color:#bdbdc7;font-size:12px}
+.local-timeline input{flex:1;accent-color:var(--accent);min-width:80px}
+.video-controls label{display:flex;gap:8px;align-items:center}
+.video-controls select{max-width:260px}
+@media(max-width:640px){.watch-dialog{padding:15px}.watch-toolbar .text-button{margin-left:0}.watch-list{grid-template-columns:1fr}.watch-stage{margin:0 -5px}.local-actions{gap:6px}.local-actions .secondary{font-size:12px;flex:1 1 auto}.local-timeline{flex-wrap:wrap}.video-controls label{flex-wrap:wrap}}

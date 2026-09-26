@@ -15,6 +15,15 @@ try {
   });
   const site = await fetch(base + '/site.html');
   assert.equal(site.status, 200);
+  const markup = await site.text();
+  assert.match(markup, /id=\"watchDialog\"/);
+  assert.match(markup, /id=\"subtitleTracks\"/);
+  assert.match(markup, /src=\"\.\/anime-player-core\.js\"[\s\S]*src=\"\.\/anime-player\.js\"/);
+  for (const resource of ['/anime-player-core.js', '/anime-player.js']) {
+    const asset = await fetch(base + resource);
+    assert.equal(asset.status, 200, resource);
+    assert.match(asset.headers.get('content-type') || '', /javascript/, resource);
+  }
   assert.match(site.headers.get('content-security-policy') || '', /script-src 'self'/);
   assert.match(site.headers.get('content-security-policy') || '', /frame-src https:\/\/www.youtube-nocookie.com/);
   assert.equal(site.headers.get('x-content-type-options'), 'nosniff');

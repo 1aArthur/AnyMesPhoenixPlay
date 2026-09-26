@@ -28,3 +28,9 @@ npm audit --omit=dev
 ```
 
 O teste HTTP inicia e encerra um servidor local na porta 3100 e força configuração vazia, sem usar credenciais reais. Os testes de Redis usam respostas simuladas. A versão de produção vinculada ao branch `main` foi publicada na Vercel e o catálogo `/site.html` e a API pública `/api/ads` responderam em 26/09/2026. Valide o login do proprietário diretamente no painel `/dev` e as configurações de proteção da implantação antes de distribuir o link. Consulte `VERIFICATION.md` para os testes locais anteriores ao deploy.
+
+## Player de vídeo
+
+Na ficha de um anime, vídeos do YouTube informados no campo `streamingEpisodes` do AniList podem ser abertos num player com seleção, anterior/próximo e tela cheia. O YouTube fornece seus próprios comandos, idioma e legendas; nem todo título possui vídeos incorporáveis, e disponibilidade varia por região. As demais plataformas são acessadas pelos links originais delas.
+
+Em **Minha mídia**, abra um arquivo do dispositivo: controles nativos mais avanço/retorno de 10 segundos, velocidades de 0,5× a 2×, modo cinema, tela cheia e janela flutuante onde houver suporte. Adicione até oito legendas locais `.vtt` de até 2 MB, reconhecidas como PT-BR ou inglês quando o nome do arquivo contiver o idioma. A posição de reprodução é salva apenas no navegador e oferecida para continuar quando o mesmo arquivo for selecionado de novo. Arquivos de vídeo e legendas não são enviados ao servidor. Não há catálogo de vídeos hospedado por este projeto, transcodificação de formatos ou tradução automática de legendas.

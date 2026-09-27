@@ -27,6 +27,7 @@ const config: NextConfig = {
     return [
       { source: '/:path*', headers: securityHeaders },
       { source: '/site.html', headers: [{ key: 'Content-Security-Policy', value: siteCsp }] },
+      { source: '/watch.html', headers: [{ key: 'Content-Security-Policy', value: siteCsp }, { key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
       { source: '/dev', headers: [{ key: 'Cache-Control', value: 'private, no-store' }, { key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
       { source: '/api/admin/:path*', headers: [{ key: 'Cache-Control', value: 'no-store' }] },
     ];

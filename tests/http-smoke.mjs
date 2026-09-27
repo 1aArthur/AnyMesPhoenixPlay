@@ -26,6 +26,14 @@ try {
   }
   assert.match(site.headers.get('content-security-policy') || '', /script-src 'self'/);
   assert.match(site.headers.get('content-security-policy') || '', /frame-src https:\/\/www.youtube-nocookie.com/);
+  const watch = await fetch(base + '/watch.html');
+  assert.equal(watch.status, 200);
+  const watchHtml = await watch.text();
+  assert.match(watchHtml, /id="cloudFrame"/);
+  assert.match(watchHtml, /id="personalVideo"/);
+  assert.match(watch.headers.get('content-security-policy') || '', /frame-src https:\/\/www.youtube-nocookie.com/);
+  assert.equal(watch.headers.get('x-robots-tag'), 'noindex, nofollow');
+  for (const resource of ['/watch-app.js', '/watch.css']) assert.equal((await fetch(base + resource)).status, 200, resource);
   assert.equal(site.headers.get('x-content-type-options'), 'nosniff');
   assert.equal(site.headers.get('x-frame-options'), 'DENY');
   assert.equal(site.headers.get('x-powered-by'), null);

@@ -40,6 +40,20 @@ test('resume uses file identity and rejects malformed file metadata', () => {
   assert.equal(player.resumeKey({ ...a, lastModified: -1 }), null);
 });
 
+test('watch page receives only validated YouTube IDs, bounded titles and episode index', () => {
+  assert.equal(player.watchPageUrl('X', [{ url: 'https://evil.example/watch?v=Abc_123-xyz' }]), null);
+  const url = new URL(player.watchPageUrl('A'.repeat(300), [
+    { url: 'https://youtu.be/Abc_123-xyz', title: 'Episódio 1' },
+    { url: 'https://www.youtube.com/watch?v=123456789ab', title: 'Episódio 2' },
+    { url: 'https://evil.example/watch?v=123456789ab', title: 'Outro' },
+  ], 300), 'https://example.test');
+  assert.equal(url.pathname, '/watch.html');
+  assert.equal(url.searchParams.get('v'), 'Abc_123-xyz,123456789ab');
+  assert.deepEqual(JSON.parse(url.searchParams.get('e')), ['Episódio 1', 'Episódio 2']);
+  assert.equal(url.searchParams.get('i'), '1');
+  assert.equal(url.searchParams.get('t').length, 140);
+});
+
 test('time and caption languages are displayed consistently', () => {
   assert.equal(player.formatTime(65.9), '1:05');
   assert.equal(player.formatTime(3661), '1:01:01');

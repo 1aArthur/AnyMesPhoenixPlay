@@ -30,6 +30,17 @@
     }).slice(0, 40);
   }
 
+  function watchPageUrl(anime, entries, index = 0) {
+    const episodes = availableEpisodes(entries).slice(0, 20);
+    if (!episodes.length) return null;
+    const params = new URLSearchParams();
+    params.set('v', episodes.map(item => item.id).join(','));
+    params.set('e', JSON.stringify(episodes.map(item => item.title)));
+    params.set('t', String(anime || 'Anime').trim().slice(0, 140));
+    params.set('i', String(Math.max(0, Math.min(Math.trunc(Number(index) || 0), episodes.length - 1))));
+    return '/watch.html?' + params.toString();
+  }
+
   function resumeKey(file) {
     if (!file || typeof file.name !== 'string' || !Number.isSafeInteger(file.size) ||
         !Number.isSafeInteger(file.lastModified) || file.size < 0 || file.lastModified < 0) return null;
@@ -52,7 +63,7 @@
     return { code: 'und', label: 'Legenda importada' };
   }
 
-  const api = { youtubeId, availableEpisodes, resumeKey, formatTime, subtitleLanguage };
+  const api = { youtubeId, availableEpisodes, watchPageUrl, resumeKey, formatTime, subtitleLanguage };
   scope.AMPPPlayerCore = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

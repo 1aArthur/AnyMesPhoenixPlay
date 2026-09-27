@@ -54,6 +54,17 @@
     return true;
   }
 
+  function openPage({ anime, entries, index = 0 }) {
+    const url = core.watchPageUrl(anime, entries, index);
+    if (!url) return false;
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.click();
+    return true;
+  }
+
   previous.addEventListener('click', () => selectEpisode(position - 1));
   next.addEventListener('click', () => selectEpisode(position + 1));
   dialog.addEventListener('close', () => {
@@ -191,5 +202,5 @@
   video.addEventListener('error', () => { videoStatus.textContent = 'O navegador não conseguiu reproduzir este formato de vídeo.'; });
   window.addEventListener('pagehide', () => saveProgress(true));
   libraryDialog.addEventListener('close', () => { video.pause(); saveProgress(true); });
-  window.AMPPPlayer = { open, setLocalFile, setSubtitles };
+  window.AMPPPlayer = { open, openPage, setLocalFile, setSubtitles };
 })();

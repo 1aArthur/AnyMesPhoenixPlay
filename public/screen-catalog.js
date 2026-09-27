@@ -47,7 +47,7 @@
       if (m.poster) { poster.src = m.poster; poster.alt = `Capa de ${m.title}`; }
       const info = node('div'); info.append(node('div', 'eyebrow small', `ANYMES / ${requestedType === 'tv' ? 'SÉRIE' : 'FILME'}`), node('h2', '', m.title), node('p', 'small-note', m.year));
       const actions = node('div', 'screen-actions');
-      if (m.trailers?.length) { const play = node('button', 'primary', '▶ Assistir ao trailer'); play.onclick = () => window.AMPPPlayer?.open({ anime: m.title, entries: m.trailers, index: 0 }); actions.append(play); }
+      if (m.trailers?.length) { const play = node('button', 'primary', '▶ Assistir ao trailer'); play.onclick = () => window.AMPPPlayer?.openPage({ anime: m.title, entries: m.trailers, index: 0 }); actions.append(play); }
       if (m.providerUrl) actions.append(link('Onde assistir ↗', m.providerUrl));
       if (m.imdbId) actions.append(link('IMDb ↗', `https://www.imdb.com/title/${m.imdbId}/`));
       else actions.append(link('Buscar no IMDb ↗', `https://www.imdb.com/find/?q=${encodeURIComponent(m.title)}`));

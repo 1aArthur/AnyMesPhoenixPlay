@@ -79,10 +79,30 @@ async function tmdb(type:'movie'|'tv', q:string): Promise<UnifiedItem[]> {
 export async function GET(request: Request) {
   const url=new URL(request.url);
   const q=clean(url.searchParams.get('q'),80);
-  if(q.length<2) return Response.json({items:[],sources:[]},{headers:{'Cache-Control':'no-store'}});
-  const [a,k,l,movie,tv]=await Promise.allSettled([anilist(q),kitsu(q),aniliberty(q),tmdb('movie',q),tmdb('tv',q)]);
-  const groups=[a,k,l,movie,tv].flatMap(x=>x.status==='fulfilled'?x.value:[]);
+  if(q.length<2) return Response.json({items:[],sources:[],sourceStatus:{}},{headers:{'Cache-Control':'no-store'}});
+
+  const results = await Promise.allSettled([
+    anilist(q),
+    kitsu(q),
+    aniliberty(q),
+    tmdb('movie',q),
+    tmdb('tv',q),
+  ]);
+  const sourceNames = ['AniList','Kitsu','AniLiberty/Kitsune','TMDB Filmes','TMDB Séries'];
+  const sourceStatus = Object.fromEntries(results.map((result, index) => [
+    sourceNames[index], result.status === 'fulfilled' ? 'ok' : 'error',
+  ]));
+  const groups=results.flatMap(x=>x.status==='fulfilled'?x.value:[]);
   const seen=new Set<string>();
-  const items=groups.filter(item=>{const key=`${item.kind}:${item.title.toLocaleLowerCase('pt-BR')}`;if(seen.has(key))return false;seen.add(key);return true;}).slice(0,30);
-  return Response.json({items,sources:['AniList','Kitsu','AniLiberty/Kitsune','TMDB']},{headers:{'Cache-Control':'public, max-age=30, stale-while-revalidate=120'}});
+  const items=groups.filter(item=>{
+    const key=`${item.kind}:${item.title.toLocaleLowerCase('pt-BR')}`;
+    if(seen.has(key))return false;
+    seen.add(key);
+    return true;
+  }).slice(0,30);
+
+  return Response.json(
+    {items,sources:Object.keys(sourceStatus).filter(name=>sourceStatus[name]==='ok'),sourceStatus},
+    {headers:{'Cache-Control':'public, max-age=30, stale-while-revalidate=120'}}
+  );
 }

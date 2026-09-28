@@ -17,6 +17,8 @@ try {
   assert.equal(site.status, 200);
   const markup = await site.text();
   assert.match(markup, /id=\"watchDialog\"/);
+  assert.match(markup, /data-sort=\"POPULARITY_DESC\"/);
+  assert.match(markup, /data-sort=\"SCORE_DESC\"/);
   assert.match(markup, /id=\"subtitleTracks\"/);
   assert.match(markup, /src=\"\.\/anime-player-core\.js\"[\s\S]*src=\"\.\/anime-player\.js\"/);
   for (const resource of ['/anime-player-core.js', '/anime-player.js']) {

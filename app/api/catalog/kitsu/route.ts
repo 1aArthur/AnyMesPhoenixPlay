@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   url.searchParams.set('page[offset]', String((page - 1) * 18));
   if (search) url.searchParams.set('filter[text]', search);
   if (Object.hasOwn(allowedGenres, genre)) url.searchParams.set('filter[categories]', allowedGenres[genre]);
-  if (!search && !genre) url.searchParams.set('sort', '-userCount');
+  if (!search && !genre) url.searchParams.set('sort', requestUrl.searchParams.get('sort') === 'SCORE_DESC' ? '-averageRating' : '-userCount');
   try {
     const response = await fetch(url, { headers: { Accept: 'application/vnd.api+json' }, signal: AbortSignal.timeout(6000) });
     if (!response.ok) return Response.json({ error: 'Kitsu indisponível' }, { status: 502 });

@@ -7,6 +7,7 @@
 .setting-row[hidden],.nav[hidden]{display:none}
 
 .source-tabs{display:flex;gap:8px;margin-top:20px}.source-tab{border:1px solid #484850;border-radius:7px;padding:7px 15px;background:#17171d;color:#c7c7d1;font-size:14px}.source-tab.active{border-color:var(--accent);color:var(--accent);font-weight:800}
+.sort-tabs{display:flex;gap:9px;margin:17px 0 -4px;overflow:auto;scrollbar-width:thin}.sort-tab{border:1px solid #3b3b43;background:#111216;color:#bbbcc5;padding:9px 16px;border-radius:8px;white-space:nowrap;font-size:13px;font-weight:700}.sort-tab:hover,.sort-tab.active{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,#111216)}
 
 .episode-list{border-top:1px solid var(--line);margin-top:22px;padding-top:16px}.episode-list h3{margin:0 0 10px}.episode-list ol{max-height:240px;overflow:auto;padding-left:25px;color:#d1d1db}.episode-list li{padding:5px 0}.episode-list .secondary{margin:3px 6px 3px 0}.episode-frame{width:100%;aspect-ratio:16/9;border:0;margin-top:15px;border-radius:8px;background:#000}
 
